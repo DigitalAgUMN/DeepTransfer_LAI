@@ -82,9 +82,6 @@ step_size = 20
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)  # , weight_decay=weight_decay
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=gamma)
 
-optimizer1 = torch.optim.Adam(model1.parameters(), lr=learning_rate)  # , weight_decay=weight_decay
-scheduler1 = torch.optim.lr_scheduler.StepLR(optimizer1, step_size=30, gamma=gamma)
-
 train_precent = np.int32(0.8 * data.shape[0])
 indices = np.random.permutation(data.shape[0])
 train_data = data[indices[:train_precent], :, :]
