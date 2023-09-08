@@ -77,8 +77,7 @@ test_data[:,:, -1] = test_data[:,:, -1] * 10.0
 for i in range(nb):
     test_data[:, :, i] = (test_data[:, :, i] - img_mean[i]) / img_std[i]
 test_data[idx,-1] = -1
-test_data1 = Loader(test_data)
-test_data_loader = torch.utils.data.DataLoader(dataset=test_data1, batch_size=2, shuffle=False, num_workers=0)
+test_data_loader = torch.utils.data.DataLoader(dataset=Loader(test_data), batch_size=2, shuffle=False, num_workers=0)
 
 learning_rate = 1e-04
 epochs = 10
@@ -87,16 +86,12 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 print(model)
 for epoch in range(1, epochs + 1):
     epoch_loss = 0
-    epoch_loss1 = 0
     for batch, train_data in enumerate(test_data_loader):
-        # set gradients to zero!!!
         optimizer.zero_grad()
 
         train_data = train_data.to(device)
-
         train_LAI = train_data[:, :, -1].flatten()
         train_data = train_data.to(torch.float32)
-
         train_data = train_data[:, :, :-1]
 
         pure = model(train_data).flatten()
